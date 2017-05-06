@@ -26,6 +26,15 @@ from idlelib.Percolator import Percolator
 from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter import Text, Frame, Scrollbar, Tk, Menu, NSEW, INSERT, RIGHT, END
 
+try:
+    import mcpi
+except ImportError as err:
+    log.info("No mcpi available: %s" % err)
+    MCPI_AVAILABLE=False
+else:
+    MCPI_AVAILABLE=True
+
+
 MINECRAFT_BIN="minecraft-pi"
 MINECRAFT_PORT=49928 # UDP
 
@@ -45,14 +54,18 @@ class MinecraftSpecials:
     special Minecraft features, if available
     """
     def __init__(self, editor):
-        self.minecraft_filepath=shutil.which(MINECRAFT_BIN)
-        log.debug("minecraft filepath: %r", self.minecraft_filepath)
-        if self.minecraft_filepath is None:
+        if not MCPI_AVAILABLE:
+            log.debug("Skip expand editor with minecraft stuff.")
             self.mcpi_available = False
-            log.info("Skip expand editor with minecraft stuff")
         else:
-            self.mcpi_available = True
-            self.expand_editor(editor)
+            self.minecraft_filepath=shutil.which(MINECRAFT_BIN)
+            log.debug("minecraft filepath: %r", self.minecraft_filepath)
+            if self.minecraft_filepath is None:
+                self.mcpi_available = False
+                log.info("Skip expand editor with minecraft stuff")
+            else:
+                self.mcpi_available = True
+                self.expand_editor(editor)
 
     def expand_editor(self, editor):
         self.editor_root = editor.root
@@ -60,6 +73,9 @@ class MinecraftSpecials:
             label="Startup Minecraft",
             command=self.startup_minecraft
         )
+
+    def is_running(self):
+        raise NotImplemented
 
     def startup_minecraft(self):
         log.info("Start minecraft: %r", self.minecraft_filepath)
