@@ -60,7 +60,7 @@ Topic :: Internet
 """
 
 install_requires = [
-    # 'six',
+    'psutil',
 ]
 
 
