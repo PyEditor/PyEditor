@@ -58,10 +58,12 @@ class MinecraftSpecials:
         self.editor_root = editor.root
         editor.menubar.add_command(
             label="Startup Minecraft",
-            command=self.startup_mindecraft
+            command=self.startup_minecraft
         )
-    def startup_mindecraft(self):
-        print("TODO")
+
+    def startup_minecraft(self):
+        log.info("Start minecraft: %r", self.minecraft_filepath)
+        subprocess.Popen([self.minecraft_filepath])
 
 
 
