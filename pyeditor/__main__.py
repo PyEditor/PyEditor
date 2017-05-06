@@ -27,28 +27,41 @@ from tkinter import Text, Frame, Scrollbar, Tk, Menu, NSEW, INSERT, RIGHT, END
 
 
 
-DEFAULT_SCRIPT="""\
+DEFAULT_MCPI_SCRIPT="""\
 from mcpi import minecraft
 
 mc = minecraft.Minecraft.create()
 mc.postToChat("Hello world, from PyEditor!")
 """
+DEFAULT_SCRIPT="""\
+print("Hello World!")
+"""
 
 # from idlelib import autocomplete_w
-class RaspberryPi:
+class MinecraftSpecials:
     """
-    special RPi/Minecraft features, if available
+    special Minecraft features, if available
     """
     def __init__(self, editor):
-        nodename = os.uname().nodename
-        is_on_rpi = nodename=="raspberrypi"
-        log.debug("is_on_rpi=%r (uname nodename: %r)", is_on_rpi, nodename)
-        if is_on_rpi:
-            self.expand_editor(editor)
+        self.mcpi_available = False
+
+        machine = os.uname().machine
+        on_arm_device = machine.startswith("arm")
+        log.debug("on_arm_device=%r (uname machine: %r)", on_arm_device, machine)
+        if on_arm_device:
+            try:
+                import mcpi
+            except ImportError as err:
+                log.warn("Can't import 'mcpi': %s" % err)
+            else:
+                self.mcpi_available = True
+                self.expand_editor(editor)
+        else:
+            log.info("Skip expand editor with minecraft stuff")
 
     def expand_editor(self, editor):
         self.editor_root = editor.root
-        self.editor_root.menubar.add_command(
+        editor.menubar.add_command(
             label="Startup Minecraft",
             command=self.startup_mindecraft
         )
@@ -132,7 +145,7 @@ class EditorWindow:
 
         self.text = Text(master=self.root, background="white")
         self.text.grid(row=0, column=0, sticky=NSEW)
-        self.set_content(DEFAULT_SCRIPT)
+
         self.text.focus_set()
 
         # autocomplete_w.AutoCompleteWindow(self.text)
@@ -148,7 +161,14 @@ class EditorWindow:
         self.init_menu()
 
         # Add special RPi/Minecraft features, if available
-        self.rpi = RaspberryPi(self)
+        self.rpi = MinecraftSpecials(self)
+
+        if self.rpi.mcpi_available:
+            # minecraft is available
+            self.set_content(DEFAULT_MCPI_SCRIPT)
+        else:
+            # no minecraft available
+            self.set_content(DEFAULT_SCRIPT)
 
         self.root.update()
 
