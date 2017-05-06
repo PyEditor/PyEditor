@@ -36,5 +36,5 @@ fi
     set -x
     pip install --upgrade pip
 
-    pip install -e git+git@github.com:PyEditor/PyEditor.git#egg=pyeditor
+    pip install -e git+https://github.com/PyEditor/PyEditor.git#egg=pyeditor
 )
