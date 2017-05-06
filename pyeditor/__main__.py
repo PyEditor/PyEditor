@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import os
+import shutil
 import sys
 import logging
 import subprocess
@@ -25,7 +26,8 @@ from idlelib.Percolator import Percolator
 from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter import Text, Frame, Scrollbar, Tk, Menu, NSEW, INSERT, RIGHT, END
 
-
+MINECRAFT_BIN="minecraft-pi"
+MINECRAFT_PORT=49928 # UDP
 
 DEFAULT_MCPI_SCRIPT="""\
 from mcpi import minecraft
@@ -43,21 +45,14 @@ class MinecraftSpecials:
     special Minecraft features, if available
     """
     def __init__(self, editor):
-        self.mcpi_available = False
-
-        machine = os.uname().machine
-        on_arm_device = machine.startswith("arm")
-        log.debug("on_arm_device=%r (uname machine: %r)", on_arm_device, machine)
-        if on_arm_device:
-            try:
-                import mcpi
-            except ImportError as err:
-                log.warn("Can't import 'mcpi': %s" % err)
-            else:
-                self.mcpi_available = True
-                self.expand_editor(editor)
-        else:
+        self.minecraft_filepath=shutil.which(MINECRAFT_BIN)
+        log.debug("minecraft filepath: %r", self.minecraft_filepath)
+        if self.minecraft_filepath is None:
+            self.mcpi_available = False
             log.info("Skip expand editor with minecraft stuff")
+        else:
+            self.mcpi_available = True
+            self.expand_editor(editor)
 
     def expand_editor(self, editor):
         self.editor_root = editor.root
@@ -254,7 +249,7 @@ class EditorWindow:
 #        self.text.config(state=Tkinter.NORMAL)
         self.text.delete("1.0", END)
 
-        log.critical("insert listing:")
+        log.critical("insert %i Bytes listing.", len(source_listing))
         self.text.insert(END, source_listing)
 
 #        self.text.config(state=Tkinter.DISABLED)
