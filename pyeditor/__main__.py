@@ -7,6 +7,7 @@ import sys
 import logging
 import subprocess
 import datetime
+import psutils
 
 log = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ else:
 
 
 MINECRAFT_BIN="minecraft-pi"
-MINECRAFT_PORT=49928 # UDP
+MINECRAFT_PORT=4711# UDP
 
 DEFAULT_MCPI_SCRIPT="""\
 from mcpi import minecraft
@@ -75,13 +76,16 @@ class MinecraftSpecials:
         )
 
     def is_running(self):
-        raise NotImplemented
+       self.is_running=False
+       for ps in psutils.process_iter():
+           if ps.name == MINECRAFT_BIN:
+               self.is_running=True
+
 
     def startup_minecraft(self):
-        log.info("Start minecraft: %r", self.minecraft_filepath)
-        subprocess.Popen([self.minecraft_filepath])
-
-
+        if not self.is_running:
+            log.info("Start minecraft: %r", self.minecraft_filepath)
+            subprocess.Popen([self.minecraft_filepath])
 
 class PythonFiles:
     """
@@ -179,6 +183,8 @@ class EditorWindow:
         if self.rpi.mcpi_available:
             # minecraft is available
             self.set_content(DEFAULT_MCPI_SCRIPT)
+            if not self.rpi.is_running:
+                self.rpi.startup_minecraft()
         else:
             # no minecraft available
             self.set_content(DEFAULT_SCRIPT)
