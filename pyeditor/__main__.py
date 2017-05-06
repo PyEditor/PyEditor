@@ -88,6 +88,8 @@ class PythonFiles:
     Handle file load/save/run stuff
     """
     def __init__(self):
+        self.script_proc = None
+
         self.base_dir=os.path.expanduser("~/PyEditor files")
         self.run_bak_path=os.path.expanduser("~/PyEditor files/run backups")
         self.auto_bak_path=os.path.expanduser("~/PyEditor files/auto backups")
@@ -113,9 +115,18 @@ class PythonFiles:
         return run_bak_filepath
 
     def run(self, filepath):
+        if self.script_proc is not None:
+            returncode = self.script_proc.poll()
+            if returncode is None: # process hasn’t terminated yet
+                log.info("Kill running script.")
+                self.script_proc.kill()
+            else:
+                log.debug("Old script process returned with: %r", returncode)
+            self.script_proc=None
+
         args = [sys.executable, filepath]
         log.info("run: %s" % " ".join(args))
-        subprocess.Popen(args)
+        self.script_proc = subprocess.Popen(args)
 
     def run_source_listing(self, source_listing):
         run_bak_filepath = self.get_run_bak_filepath()
