@@ -77,8 +77,10 @@ class MinecraftSpecials:
 
     def is_running(self):
         for ps in psutil.process_iter():
-            if ps.name == MINECRAFT_BIN:
+            if ps.name() == MINECRAFT_BIN:
+                log.debug("minecraft is running.")
                 return True
+        log.debug("minecraft is not running.")
         return False
 
     def startup_minecraft(self):
