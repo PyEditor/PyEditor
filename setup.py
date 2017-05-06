@@ -41,8 +41,6 @@ class ToxTestCommand(distutils.cmd.Command):
 exec(read('pyeditor', 'version.py'))
 
 classifiers = """
-# The next line is important: it prevents accidental upload to PyPI!
-Private :: Do Not Upload
 Development Status :: 2 - Pre-Alpha
 Intended Audience :: Developers
 License :: OSI Approved :: GPL v3+
@@ -50,8 +48,6 @@ License :: OSI Approved :: GPL v3+
 #Operating System :: Microsoft :: Windows
 Operating System :: POSIX
 Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
 #Programming Language :: Python :: 3
 #Programming Language :: Python :: 3.4
 #Programming Language :: Python :: 3.5
