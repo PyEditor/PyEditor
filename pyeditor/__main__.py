@@ -35,9 +35,32 @@ mc.postToChat("Hello world, from PyEditor!")
 """
 
 # from idlelib import autocomplete_w
+class RaspberryPi:
+    """
+    special RPi/Minecraft features, if available
+    """
+    def __init__(self, editor):
+        nodename = os.uname().nodename
+        is_on_rpi = nodename=="raspberrypi"
+        log.debug("is_on_rpi=%r (uname nodename: %r)", is_on_rpi, nodename)
+        if is_on_rpi:
+            self.expand_editor(editor)
+
+    def expand_editor(self, editor):
+        self.editor_root = editor.root
+        self.editor_root.menubar.add_command(
+            label="Startup Minecraft",
+            command=self.startup_mindecraft
+        )
+    def startup_mindecraft(self):
+        print("TODO")
+
 
 
 class PythonFiles:
+    """
+    Handle file load/save/run stuff
+    """
     def __init__(self):
         self.base_dir=os.path.expanduser("~/PyEditor files")
         self.run_bak_path=os.path.expanduser("~/PyEditor files/run backups")
@@ -90,6 +113,7 @@ class EditorWindow:
 
         self.python_files = PythonFiles()
 
+
         self.root.geometry("%dx%d+%d+%d" % (
             self.root.winfo_screenwidth() * 0.6, self.root.winfo_screenheight() * 0.6,
             self.root.winfo_screenwidth() * 0.1, self.root.winfo_screenheight() * 0.1
@@ -122,6 +146,9 @@ class EditorWindow:
 
         # add menu to window
         self.init_menu()
+
+        # Add special RPi/Minecraft features, if available
+        self.rpi = RaspberryPi(self)
 
         self.root.update()
 
