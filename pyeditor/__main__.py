@@ -123,7 +123,7 @@ class PythonFiles:
         if self.script_proc is not None:
             returncode = self.script_proc.poll()
             if returncode is None: # process hasn’t terminated yet
-                log.info("Kill running script.")
+                log.info("Kill old running script, PID: %r", self.script_proc.pid)
                 self.script_proc.kill()
             else:
                 log.debug("Old script process returned with: %r", returncode)
@@ -132,6 +132,7 @@ class PythonFiles:
         args = [sys.executable, filepath]
         log.info("run: %s" % " ".join(args))
         self.script_proc = subprocess.Popen(args)
+        log.debug("PID: %r", self.script_proc.pid)
 
     def run_source_listing(self, source_listing):
         run_bak_filepath = self.get_run_bak_filepath()
