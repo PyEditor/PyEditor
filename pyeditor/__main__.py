@@ -167,7 +167,7 @@ class EditorWindow:
             mode="r",
             title="Select a Python file to load",
             filetypes=self.DEFAULT_FILETYPES,
-            #initialdir=self.current_dir,
+            initialdir=self.python_files.base_dir,
         )
         if infile is not None:
             source_listing = infile.read()
@@ -182,7 +182,7 @@ class EditorWindow:
             mode="w",
             filetypes=self.DEFAULT_FILETYPES,
             defaultextension=self.DEFAULTEXTENSION,
-            # initialdir=self.current_dir,
+            initialdir=self.python_files.base_dir,
         )
         if outfile is not None:
             content = self.get_content()
