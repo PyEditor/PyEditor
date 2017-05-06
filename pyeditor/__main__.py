@@ -39,7 +39,6 @@ class EditorWindow:
             self.text.insert("insert", f.read())
         self.text.focus_set()
 
-        color_config(self.text)
         p = Percolator(self.text)
         d = ColorDelegator()
         p.insertfilter(d)
