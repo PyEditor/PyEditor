@@ -5,7 +5,7 @@ import sys
 
 print(sys.version)
 
-from idlelib.ColorDelegator import ColorDelegator, color_config
+from idlelib.ColorDelegator import ColorDelegator
 from idlelib.MultiCall import MultiCallCreator
 from idlelib.MultiStatusBar import MultiStatusBar
 from idlelib.Percolator import Percolator
