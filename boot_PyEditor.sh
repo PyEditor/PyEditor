@@ -8,7 +8,7 @@ DESTINATION=$(pwd)/PyEditor_env
 
     python3 --version
 
-    python3 -Im venv --without-pip ${DESTINATION}
+    python3 -Im venv --system-site-packages --without-pip ${DESTINATION}
 
     ls -la ${DESTINATION}/bin
 )
