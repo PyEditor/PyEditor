@@ -7,7 +7,7 @@ import sys
 import logging
 import subprocess
 import datetime
-import psutils
+import psutil
 
 log = logging.getLogger(__name__)
 
