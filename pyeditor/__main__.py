@@ -76,11 +76,12 @@ class MinecraftSpecials:
         )
 
     def is_running(self):
-       self.is_running=False
+       self.b_is_running=False
        for ps in psutils.process_iter():
            if ps.name == MINECRAFT_BIN:
-               self.is_running=True
+               self.b_is_running=True
 
+       return self.b_is_rub_nning
 
     def startup_minecraft(self):
         if not self.is_running:
