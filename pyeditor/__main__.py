@@ -76,17 +76,18 @@ class MinecraftSpecials:
         )
 
     def is_running(self):
-       self.b_is_running=False
-       for ps in psutils.process_iter():
-           if ps.name == MINECRAFT_BIN:
-               self.b_is_running=True
-
-       return self.b_is_running
+        for ps in psutil.process_iter():
+            if ps.name == MINECRAFT_BIN:
+                return True
+        return False
 
     def startup_minecraft(self):
-        if not self.is_running:
+        if self.is_running():
+            log.info("Skip start minecraft, because it's already running ;)")
+        else:
             log.info("Start minecraft: %r", self.minecraft_filepath)
             subprocess.Popen([self.minecraft_filepath])
+
 
 class PythonFiles:
     """
