@@ -27,6 +27,13 @@ from tkinter import Text, Frame, Scrollbar, Tk, Menu, NSEW, INSERT, RIGHT, END
 
 
 
+DEFAULT_SCRIPT="""\
+from mcpi import minecraft
+
+mc = minecraft.Minecraft.create()
+mc.postToChat("Hello world, from PyEditor!")
+"""
+
 # from idlelib import autocomplete_w
 
 
@@ -101,8 +108,7 @@ class EditorWindow:
 
         self.text = Text(master=self.root, background="white")
         self.text.grid(row=0, column=0, sticky=NSEW)
-        with open(__file__, "r") as f:
-            self.text.insert("insert", f.read())
+        self.set_content(DEFAULT_SCRIPT)
         self.text.focus_set()
 
         # autocomplete_w.AutoCompleteWindow(self.text)
