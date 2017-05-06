@@ -81,7 +81,7 @@ class MinecraftSpecials:
            if ps.name == MINECRAFT_BIN:
                self.b_is_running=True
 
-       return self.b_is_rub_nning
+       return self.b_is_running
 
     def startup_minecraft(self):
         if not self.is_running:
