@@ -3,6 +3,8 @@
 
 import sys
 
+print(sys.version)
+
 from idlelib.ColorDelegator import ColorDelegator, color_config
 from idlelib.MultiCall import MultiCallCreator
 from idlelib.MultiStatusBar import MultiStatusBar
