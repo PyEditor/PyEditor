@@ -1,7 +1,10 @@
-from tkinter import NSEW, END
+from tkinter import NSEW, END, INSERT
+
+import logging
 
 from pyeditor.tk_helpers.scrolledlistbox import ScrolledListbox
 
+log = logging.getLogger(__name__)
 
 class ScriptList:
     """
@@ -14,6 +17,8 @@ class ScriptList:
         self.file_list = ScrolledListbox(self.root)
         self.file_list.grid(row=0, column=1, rowspan=2, sticky=NSEW)
 
+        self.file_list.bind("<Button-1>", self.click_handler)
+
         self.fill_file_list()
 
     def fill_file_list(self):
@@ -21,6 +26,9 @@ class ScriptList:
         for file_name in file_names:
             self.file_list.insert(END, file_name)
 
-        # files = [f for f in os.listdir(RUN_BAK_PATH) if os.path.isfile(os.path.join(RUN_BAK_PATH, f))]
-        # for f in files:
-        #     self.file_view.insert(END, f)
+    def click_handler(self, event):
+        print("Click:", event)
+        widget = event.widget
+        index = event.widget.nearest(event.y) # FIXME
+        value = widget.get(index)
+        log.debug("Clicked on item %d: '%s'", index, value)
