@@ -22,8 +22,7 @@ class EditorWindow:
     def __init__(self):
         self.root = Tk(className="EDITOR")
 
-        self.python_files = PythonFiles()
-
+        self.python_files = PythonFiles(self)
 
         self.root.geometry("%dx%d+%d+%d" % (
             self.root.winfo_screenwidth() * 0.6, self.root.winfo_screenheight() * 0.6,
@@ -121,7 +120,7 @@ class EditorWindow:
         source_listing = self.get_content()
         self.exec_output.config(state=NORMAL)
         self.exec_output.delete("1.0", END)
-        self.python_files.run_source_listing(source_listing, self)
+        self.python_files.run_source_listing(source_listing)
         log.debug("Adding to terminal out")
         #self.exec_output.insert(END, "Run Script")
         self.exec_output.config(state=DISABLED)
@@ -163,19 +162,18 @@ class EditorWindow:
         return content
 
     def set_content(self, source_listing):
-#        self.text.config(state=Tkinter.NORMAL)
         self.text.delete("1.0", END)
 
         log.critical("insert %i Bytes listing.", len(source_listing))
         self.text.insert(END, source_listing)
 
-#        self.text.config(state=Tkinter.DISABLED)
         self.text.mark_set(INSERT, '1.0') # Set cursor at start
         self.text.focus()
 
-    def append_output(self, text):
-        self.exec_output.insert(END, text) 
-
+    def append_exec_output(self, text):
+        self.exec_output.config(state=NORMAL)
+        self.exec_output.insert(END, text)
+        self.exec_output.config(state=DISABLED)
 
     ###########################################################################
 
