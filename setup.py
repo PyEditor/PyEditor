@@ -41,21 +41,17 @@ class ToxTestCommand(distutils.cmd.Command):
 exec(read('pyeditor', 'version.py'))
 
 classifiers = """
-# The next line is important: it prevents accidental upload to PyPI!
-Private :: Do Not Upload
 Development Status :: 2 - Pre-Alpha
 Intended Audience :: Developers
-License :: OSI Approved :: GPL v3+
-#Operating System :: MacOS :: MacOS X
-#Operating System :: Microsoft :: Windows
+License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Operating System :: MacOS :: MacOS X
+Operating System :: Microsoft :: Windows
 Operating System :: POSIX
 Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
-#Programming Language :: Python :: 3
-#Programming Language :: Python :: 3.4
-#Programming Language :: Python :: 3.5
-#Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3
+Programming Language :: Python :: 3.4
+Programming Language :: Python :: 3.5
+Programming Language :: Python :: 3.6
 Topic :: Internet
 """
 
@@ -68,7 +64,7 @@ setup(
     name='PyEditor',
     version=__version__,  # noqa
     description='Python Editor for beginners and Minecraft Fans',
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     author='Jens Diemer',
     author_email='PyEditor@jensdiemer.de',
     url='https://github.com/PyEditor/PyEditor',

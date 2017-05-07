@@ -27,6 +27,8 @@ from idlelib.Percolator import Percolator
 from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter import Text, Frame, Scrollbar, Tk, Menu, NSEW, INSERT, RIGHT, END
 
+BREAK="break"
+
 try:
     import mcpi
 except ImportError as err:
@@ -177,6 +179,7 @@ class EditorWindow:
         self.vbar = Scrollbar(self.text_frame, name='vbar')
 
         self.text = Text(master=self.root, background="white")
+        self.text.bind("<Tab>", self.tab_event)
         self.text.grid(row=0, column=0, sticky=NSEW)
 
         #TODO: find a right height
@@ -301,6 +304,15 @@ class EditorWindow:
         self.text.focus()
 
     ###########################################################################
+
+    indent_pad=" "*4
+    def tab_event(self, event):
+        log.debug("Tab event")
+        self.text.insert("insert", self.indent_pad)
+        return BREAK
+
+    ###########################################################################
+
 
 def main():
     root = Tk(className="EDITOR")
