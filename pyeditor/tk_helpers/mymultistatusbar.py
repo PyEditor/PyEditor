@@ -1,9 +1,9 @@
-from tkinter import Entry, SUNKEN, W, LEFT
+from tkinter import Entry, SUNKEN, W, LEFT, END
 from idlelib.MultiStatusBar import MultiStatusBar
 
 
 class MyMultiStatusBar(MultiStatusBar):
-    
+
     def __init__(self, master, **kw):
        MultiStatusBar.__init__(self, master, **kw)
        self.entrys = {}
@@ -25,7 +25,7 @@ class MyMultiStatusBar(MultiStatusBar):
         entry = self.entrys[name]
         entry.delete(0, END)
         entry.insert(0, text)
-    
+
     def get_textEntry(self, name):
         if name not in self.entrys:
             return None
