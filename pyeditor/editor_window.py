@@ -1,7 +1,7 @@
 import sys
 import logging
 
-from tkinter import Frame, Scrollbar, Text, NSEW, RIGHT, INSERT, Menu, END, Tk
+from tkinter import Frame, Scrollbar, Text, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL
 from tkinter.filedialog import askopenfile, asksaveasfile
 
 from idlelib.ColorDelegator import ColorDelegator
@@ -46,8 +46,10 @@ class EditorWindow:
         self.text.grid(row=0, column=0, sticky=NSEW)
 
         #TODO: find a right height
-        self.text1 = Text(master=self.root, height=20)
-        self.text1.grid(row=1, column=0, sticky=NSEW)
+        self.exec_output = Text(master=self.root, height=10, state=DISABLED)
+        self.exec_vbar = Scrollbar(self.exec_output, name='exec_vbar')
+
+        self.exec_output.grid(row=1, column=0, sticky=NSEW)
 
         self.text.focus_set()
 
@@ -117,7 +119,12 @@ class EditorWindow:
 
     def command_run(self):
         source_listing = self.get_content()
-        self.python_files.run_source_listing(source_listing)
+        self.exec_output.config(state=NORMAL)
+        self.exec_output.delete("1.0", END)
+        self.python_files.run_source_listing(source_listing, self)
+        log.debug("Adding to terminal out")
+        #self.exec_output.insert(END, "Run Script")
+        self.exec_output.config(state=DISABLED)
 
     def command_load_file(self):
         infile = askopenfile(
@@ -165,6 +172,10 @@ class EditorWindow:
 #        self.text.config(state=Tkinter.DISABLED)
         self.text.mark_set(INSERT, '1.0') # Set cursor at start
         self.text.focus()
+
+    def append_output(self, text):
+        self.exec_output.insert(END, text) 
+
 
     ###########################################################################
 
