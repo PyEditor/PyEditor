@@ -1,8 +1,9 @@
 import sys
 import logging
 
-from tkinter import Frame, Scrollbar, Text, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL
+from tkinter import Frame, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL
 from tkinter.filedialog import askopenfile, asksaveasfile
+from tkinter.scrolledtext import ScrolledText
 
 from idlelib.ColorDelegator import ColorDelegator
 from idlelib.MultiStatusBar import MultiStatusBar
@@ -14,6 +15,7 @@ from pyeditor.example_scripts import DEFAULT_MCPI_SCRIPT, DEFAULT_SCRIPT
 from pyeditor.minecraft_specials import MinecraftSpecials
 from pyeditor.python_files import PythonFiles
 from pyeditor.version import __version__
+
 
 log = logging.getLogger(__name__)
 
@@ -35,18 +37,14 @@ class EditorWindow:
         self.base_title = "PyEditor v%s" % __version__
         self.root.title(self.base_title)
 
-        # self.top = top = windows.ListedToplevel(root, menu=self.menubar)
-
         self.text_frame = Frame(master=self.root)
-        self.vbar = Scrollbar(self.text_frame, name='vbar')
 
-        self.text = Text(master=self.root, background="white")
+        self.text = ScrolledText(master=self.root, background="white")
         self.text.bind("<Tab>", self.tab_event)
         self.text.grid(row=0, column=0, sticky=NSEW)
 
         #TODO: find a right height
-        self.exec_output = Text(master=self.root, height=10, state=DISABLED)
-        self.exec_vbar = Scrollbar(self.exec_output, name='exec_vbar')
+        self.exec_output = ScrolledText(master=self.root, height=10, state=DISABLED)
 
         self.exec_output.grid(row=1, column=0, sticky=NSEW)
 
