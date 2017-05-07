@@ -64,7 +64,7 @@ setup(
     name='PyEditor',
     version=__version__,  # noqa
     description='Python Editor for beginners and Minecraft Fans',
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     author='Jens Diemer',
     author_email='PyEditor@jensdiemer.de',
     url='https://github.com/PyEditor/PyEditor',
