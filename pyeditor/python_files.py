@@ -1,10 +1,14 @@
 
 import datetime
+import fnmatch
+import glob
 import os
 import sys
 import logging
 
-from pyeditor.config import RUN_BAK_PATH, AUTO_BAK_PATH
+import re
+
+from pyeditor.config import BASE_PATH, RUN_BAK_PATH, AUTO_BAK_PATH
 from pyeditor.tk_helpers.tk_subprocess import TkSubprocess
 
 
@@ -24,6 +28,39 @@ class PythonFiles:
         os.makedirs(AUTO_BAK_PATH, mode=0o766, exist_ok=True)
 
         self.current_filename="unnamed"
+
+        self.file_list={}
+
+    def get_filenames(self):
+        self.file_list.clear()
+
+        filename_re = re.compile("(?P<date>\d{4}-\d{2}-\d{2} \d{1,2}h\d{1,2}m\d{1,2}s) (?P<filename>.*?)\.py")
+
+        # glob with recursive=True is new in Python 3.5, but we want to support 3.4, too ;)
+        for root, dirs, files in os.walk(BASE_PATH):
+            for filename in files:
+                if not fnmatch.fnmatch(filename, "*.py"):
+                    log.debug("Skip non *.py file: %r", filename)
+                    continue
+
+                filepath = os.path.join(root, filename)
+
+                re_result = filename_re.match(filename)
+                if re_result is not None:
+                    # remove date string from filename
+                    date_string = re_result.group("date")
+                    filename = re_result.group("filename")
+                    # print(filename, date_string, filename)
+
+                if filename not in self.file_list:
+                    self.file_list[filename]=[filepath]
+                else:
+                    self.file_list[filename].append(filepath)
+
+        filenames = list(self.file_list.keys())
+        filenames.sort()
+
+        return filenames
 
     def generate_filename(self):
         dt = datetime.datetime.now(tz=None)
