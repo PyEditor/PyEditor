@@ -3,6 +3,7 @@ import datetime
 import fnmatch
 import glob
 import os
+import shutil
 import sys
 import logging
 
@@ -62,32 +63,47 @@ class PythonFiles:
 
         return filenames
 
-    def generate_filename(self):
+    def generate_filename(self, filename):
         dt = datetime.datetime.now(tz=None)
         filename = "{date} {name}.py".format(
             date=dt.strftime("%Y-%m-%d %Hh%Mm%Ss"),
-            name=self.current_filename
+            name=filename
         )
         return filename
 
-    def get_run_bak_filepath(self):
-        filename = self.generate_filename()
+    def get_run_bak_filepath(self, filename):
+        filepath = self.generate_filename(filename)
         run_bak_filepath = os.path.join(
-            RUN_BAK_PATH, filename
+            RUN_BAK_PATH, filepath
         )
         return run_bak_filepath
+
+    def get_auto_bak_filepath(self, filename):
+        filepath = self.generate_filename(filename)
+        auto_bak_filepath = os.path.join(
+            AUTO_BAK_PATH, filepath
+        )
+        return auto_bak_filepath
 
     def run(self, filepath):
         TkSubprocess(
             self.editor_window.root,
             args = [sys.executable, filepath],
-            callback=self.editor_window.append_exec_output
+            output_callback=self.editor_window.append_exec_output,
+            info_callback=self.editor_window.append_feedback_to_output
         )
 
-    def run_source_listing(self, source_listing):
-        run_bak_filepath = self.get_run_bak_filepath()
+    def run_source_listing(self, source_listing, filename):
+        run_bak_filepath = self.get_run_bak_filepath(filename)
         log.info("Save to: %r", run_bak_filepath)
         with open(run_bak_filepath, "w") as f:
             f.write(source_listing)
 
         self.run(run_bak_filepath)
+
+    def move_to_backup(self, filepath):
+        filename = os.path.split(filepath)[1]
+        destination_path = self.get_auto_bak_filepath(filename)
+        log.info("move %r -> %r", filepath, destination_path)
+        shutil.move(filepath, destination_path)
+

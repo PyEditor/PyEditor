@@ -1,4 +1,4 @@
-
+import os
 import sys
 import logging
 
@@ -50,14 +50,22 @@ class EditorWindow:
         self.text.grid(row=0, column=0, sticky=NSEW)
 
         #TODO: find a right height
-        self.exec_output = ScrolledText(master=self.root, height=10, state=DISABLED)
+        self.exec_output = ScrolledText(
+            master=self.root, height=10,
+            state=DISABLED, background="#dddddd"
+        )
+
+        # for information text like load/save/run:
+        self.exec_output.tag_config("info",
+            foreground="#0000ff",
+            #background="#eeeeee"
+        )
 
         self.exec_output.grid(row=1, column=0, sticky=NSEW)
 
         self.text.focus_set()
 
-        self.script_list = ScriptList(self)
-        # autocomplete_w.AutoCompleteWindow(self.text)
+        # self.script_list = ScriptList(self)
 
         p = Percolator(self.text)
         d = ColorDelegator()
@@ -86,8 +94,21 @@ class EditorWindow:
     ###########################################################################
     # Status bar
 
-    def filenameCallback(self, event):
-        log.debug(self.status_bar.get_textEntry("test"))
+    FILENAME_LABEL="filename"
+
+    def get_filename(self):
+        filename = self.status_bar.get_textEntry(self.FILENAME_LABEL)
+        return filename
+
+    def set_filename(self, filename):
+        filename = os.path.split(filename)[-1]
+        self.status_bar.set_textEntry(self.FILENAME_LABEL, filename)
+
+    def update_filename(self, event=None):
+        filename = self.get_filename()
+        if filename and not filename.endswith(".py"):
+            filename = "%s.py" % filename
+            self.set_filename(filename)
 
     def init_statusbar(self):
         self.status_bar = MyMultiStatusBar(self.root)
@@ -101,7 +122,10 @@ class EditorWindow:
         self.text.event_add("<<set-line-and-column>>",
                             "<KeyRelease>", "<ButtonRelease>")
         self.text.after_idle(self.set_line_and_column)
-        self.status_bar.new_textEntry('filename', 'unnamed', callback=self.filenameCallback)
+        self.status_bar.new_textEntry(
+            self.FILENAME_LABEL, 'unnamed.py',
+            callback=self.update_filename
+        )
 
     def set_line_and_column(self, event=None):
         line, column = self.text.index(INSERT).split('.')
@@ -129,7 +153,8 @@ class EditorWindow:
         source_listing = self.get_content()
         self.exec_output.config(state=NORMAL)
         self.exec_output.delete("1.0", END)
-        self.python_files.run_source_listing(source_listing)
+        filename = self.get_filename()
+        self.python_files.run_source_listing(source_listing, filename)
         log.debug("Adding to terminal out")
         #self.exec_output.insert(END, "Run Script")
         self.exec_output.config(state=DISABLED)
@@ -147,21 +172,23 @@ class EditorWindow:
             infile.close()
             self.set_content(source_listing)
 
-            # self.setup_filepath(infile.name)
+            self.set_filename(infile.name) # FIXME: insert only name!
+            self.append_feedback_to_output("Script %r loaded." % infile.name)
 
     def command_save_file(self):
-        outfile = asksaveasfile(
-            parent=self.root,
-            mode="w",
-            filetypes=DEFAULT_FILETYPES,
-            defaultextension=DEFAULTEXTENSION,
-            initialdir=BASE_PATH,
-        )
-        if outfile is not None:
-            content = self.get_content()
-            outfile.write(content)
-            outfile.close()
-            # self.setup_filepath(outfile.name)
+        self.update_filename() # FIXME: add .py if missing
+
+        content = self.get_content()
+        filename = self.get_filename()
+        filepath = os.path.join(BASE_PATH, filename)
+
+        if os.path.isfile(filepath):
+            self.python_files.move_to_backup(filepath)
+
+        with open(filepath, "w") as f:
+            f.write(content)
+
+        self.append_feedback_to_output("Save to: %r" % filepath)
 
     ###########################################################################
 
@@ -182,6 +209,12 @@ class EditorWindow:
     def append_exec_output(self, text):
         self.exec_output.config(state=NORMAL)
         self.exec_output.insert(END, text)
+        self.exec_output.config(state=DISABLED)
+
+    def append_feedback_to_output(self, text):
+        text = "%s\n" % text.rstrip()
+        self.exec_output.config(state=NORMAL)
+        self.exec_output.insert(END, text, "info")
         self.exec_output.config(state=DISABLED)
 
     ###########################################################################

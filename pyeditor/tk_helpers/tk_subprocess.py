@@ -13,9 +13,10 @@ class TkSubprocess:
     """
     run a subprocess and pipe output to GUI
     """
-    def __init__(self, root, args, callback):
+    def __init__(self, root, args, output_callback, info_callback):
         self.root = root
-        self.callback = callback
+        self.output_callback=output_callback
+        self.info_callback=info_callback
         self.process = None
         self.run(args)
 
@@ -75,13 +76,13 @@ class TkSubprocess:
             if line is None:
                 returncode = self.process.poll()
                 if returncode is not None:
-                    self.callback(
+                    self.info_callback(
                         "Process finished with exit code %r" % returncode
                     )
                     return
             else:
                 log.debug("Add process output to GUI: %s", repr(line))
-                self.callback(line)
+                self.output_callback(line)
                 break # display no more than one line per 40 milliseconds
 
         self.root.after(40, self.update_output_loop, q) # schedule next update
