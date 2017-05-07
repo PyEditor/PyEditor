@@ -76,5 +76,8 @@ setup(
     install_requires=install_requires,
     cmdclass={
         'test': ToxTestCommand,
+    },
+    entry_points={
+        "console_scripts": ["pyeditor = pyeditor.__main__:main"],
     }
 )
