@@ -1,7 +1,8 @@
+
 import sys
 import logging
 
-from tkinter import Frame, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL
+from tkinter import Frame, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL, Listbox
 from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter.scrolledtext import ScrolledText
 
