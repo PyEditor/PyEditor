@@ -2,6 +2,8 @@
 
 Python Editor for beginners and Minecraft Fans.
 
+works only on Python 3 ;)
+
 
 ## quickstart
 
@@ -14,10 +16,10 @@ Python Editor for beginners and Minecraft Fans.
 (PyEditor_env) ~/PyEditor_env$ pyeditor
 ```
 
+
 ## TODO
 
-* file name input field
-* python script output 
+* file name input field 
 * filelist
 * unittests: Travis CI, tox 
 * gettext
@@ -26,11 +28,15 @@ Python Editor for beginners and Minecraft Fans.
 * "desktop" integration
 * installation? (e.g.: setup.exe for windows, debian package etc.)
 
+
 ## history
 
+* v0.1.0
+  * display "run output" in GUI
 * v0.0.1
   * first release created on "[PyDDF Python Spring Sprint 2017](http://www.pyddf.de/)"
   * Project started with [SpotlightKid/python-package-cookiecutter](https://github.com/SpotlightKid/python-package-cookiecutter)
+
 
 ## links
 
