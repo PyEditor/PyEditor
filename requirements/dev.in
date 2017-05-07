@@ -7,3 +7,5 @@ pylint
 pytest
 Sphinx
 tox
+wheel
+twine
