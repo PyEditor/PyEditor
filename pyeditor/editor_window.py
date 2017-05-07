@@ -1,15 +1,18 @@
 import sys
 import logging
+import os
 
-from tkinter import Frame, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL
+from tkinter import Frame, NSEW, RIGHT, INSERT, Menu, END, Tk, DISABLED, NORMAL, Listbox, Scrollbar, HORIZONTAL
 from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter.scrolledtext import ScrolledText
+
+from pyeditor.tk_helpers.scrolledlistbox import ScrolledListbox
 
 from idlelib.ColorDelegator import ColorDelegator
 from idlelib.MultiStatusBar import MultiStatusBar
 from idlelib.Percolator import Percolator
 
-from pyeditor.config import DEFAULT_FILETYPES, BASE_PATH, DEFAULTEXTENSION
+from pyeditor.config import DEFAULT_FILETYPES, BASE_PATH, RUN_BAK_PATH, DEFAULTEXTENSION
 from pyeditor.constants import BREAK
 from pyeditor.example_scripts import DEFAULT_MCPI_SCRIPT, DEFAULT_SCRIPT
 from pyeditor.minecraft_specials import MinecraftSpecials
@@ -51,6 +54,10 @@ class EditorWindow:
 
         self.text.focus_set()
 
+        self.file_view = ScrolledListbox(self.root)
+        self.file_view.grid(row=0, column=1, rowspan=2, sticky=NSEW)
+
+        self.get_files()
         # autocomplete_w.AutoCompleteWindow(self.text)
 
         p = Percolator(self.text)
@@ -173,6 +180,11 @@ class EditorWindow:
         self.exec_output.config(state=NORMAL)
         self.exec_output.insert(END, text)
         self.exec_output.config(state=DISABLED)
+    
+    def get_files(self):
+        files = [f for f in os.listdir(RUN_BAK_PATH) if os.path.isfile(os.path.join(RUN_BAK_PATH, f))]
+        for f in files:
+            self.file_view.insert(END, f)
 
     ###########################################################################
 
