@@ -79,8 +79,8 @@ docs:
 requirements:
 	$(MAKE) -C requirements all
 
-## package and upload a release
-release: clean
+## package and upload a release to PyPi
+publish: clean
 	python setup.py publish
 
 ## builds source and wheel package
