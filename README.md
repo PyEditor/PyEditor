@@ -31,6 +31,9 @@ works only on Python 3 ;)
 
 ## history
 
+* v0.2.0 - 07.05.2017 - [[https://github.com/PyEditor/PyEditor/compare/v0.1.0...v0.2.0|compare v0.1.0...v0.2.0]]
+  * status output
+  * load/save
 * v0.1.0
   * display "run output" in GUI
 * v0.0.1
