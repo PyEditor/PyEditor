@@ -7,6 +7,7 @@ from tkinter.filedialog import askopenfile, asksaveasfile
 from tkinter.scrolledtext import ScrolledText
 
 from pyeditor.tk_helpers.scrolledlistbox import ScrolledListbox
+from pyeditor.tk_helpers.mymultistatusbar import MyMultiStatusBar
 
 from idlelib.ColorDelegator import ColorDelegator
 from idlelib.MultiStatusBar import MultiStatusBar
@@ -87,8 +88,11 @@ class EditorWindow:
     ###########################################################################
     # Status bar
 
+    def filenameCallback(self, event):
+        log.debug(self.status_bar.get_textEntry("test"))
+
     def init_statusbar(self):
-        self.status_bar = MultiStatusBar(self.root)
+        self.status_bar = MyMultiStatusBar(self.root)
         if sys.platform == "darwin":
             # Insert some padding to avoid obscuring some of the statusbar
             # by the resize widget.
@@ -99,6 +103,7 @@ class EditorWindow:
         self.text.event_add("<<set-line-and-column>>",
                             "<KeyRelease>", "<ButtonRelease>")
         self.text.after_idle(self.set_line_and_column)
+        self.status_bar.new_textEntry('filename', 'unnamed', callback=self.filenameCallback)
 
     def set_line_and_column(self, event=None):
         line, column = self.text.index(INSERT).split('.')
