@@ -179,6 +179,10 @@ class EditorWindow:
         self.text = Text(master=self.root, background="white")
         self.text.grid(row=0, column=0, sticky=NSEW)
 
+        #TODO: find a right height
+        self.text1 = Text(master=self.root, height=20)
+        self.text1.grid(row=1, column=0, sticky=NSEW)
+
         self.text.focus_set()
 
         # autocomplete_w.AutoCompleteWindow(self.text)
@@ -216,7 +220,7 @@ class EditorWindow:
             # Insert some padding to avoid obscuring some of the statusbar
             # by the resize widget.
             self.status_bar.set_label('_padding1', '    ', side=RIGHT)
-        self.status_bar.grid(row=1, column=0)
+        self.status_bar.grid(row=2, column=0)
 
         self.text.bind("<<set-line-and-column>>", self.set_line_and_column)
         self.text.event_add("<<set-line-and-column>>",
