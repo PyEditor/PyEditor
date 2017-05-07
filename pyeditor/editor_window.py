@@ -13,7 +13,7 @@ from pyeditor.constants import BREAK
 from pyeditor.example_scripts import DEFAULT_MCPI_SCRIPT, DEFAULT_SCRIPT
 from pyeditor.minecraft_specials import MinecraftSpecials
 from pyeditor.python_files import PythonFiles
-
+from pyeditor.version import __version__
 
 log = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class EditorWindow:
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
-        self.base_title = "PyEditor"
+        self.base_title = "PyEditor v%s" % __version__
         self.root.title(self.base_title)
 
         # self.top = top = windows.ListedToplevel(root, menu=self.menubar)
