@@ -27,7 +27,7 @@ class EditorWindow:
         self.python_files = PythonFiles(self)
 
         self.root.geometry("%dx%d+%d+%d" % (
-            self.root.winfo_screenwidth() * 0.4, self.root.winfo_screenheight() * 0.4,
+            self.root.winfo_screenwidth() * 0.5, self.root.winfo_screenheight() * 0.4,
             # self.root.winfo_screenwidth() * 0.1, self.root.winfo_screenheight() * 0.1
             0,0
         ))
