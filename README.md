@@ -11,7 +11,7 @@ Python Editor for beginners and Minecraft Fans.
 ~$ ./boot_PyEditor.sh
 ~$ cd PyEditor_env
 ~/PyEditor_env$ source bin/activate
-(PyEditor_env) ~/PyEditor_env$ python -m pyeditor
+(PyEditor_env) ~/PyEditor_env$ pyeditor
 ```
 
 ## TODO
