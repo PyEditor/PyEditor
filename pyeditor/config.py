@@ -1,5 +1,7 @@
 import os
 
+DESCRIPTION="Python Editor for beginners and Minecraft Fans"
+
 DEFAULT_FILETYPES=[ # for askopenfile, asksaveasfile, etc.
     ("Python files", "*.py", "TEXT"),
     ("All files", "*"),
