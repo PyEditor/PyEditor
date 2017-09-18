@@ -40,9 +40,9 @@ works only on Python 3 ;)
 
 ## history
 
-* v0.2.1 - 18.09.2017 - [[https://github.com/PyEditor/PyEditor/compare/v0.2.0...v0.2.1|compare v0.2.0...v0.2.1]]
+* v0.2.1 - 18.09.2017 - [compare v0.2.0...v0.2.1](https://github.com/PyEditor/PyEditor/compare/v0.2.0...v0.2.1)
   * [Bugfix idlelib imports for Python 3.6](https://github.com/PyEditor/PyEditor/pull/2)
-* v0.2.0 - 07.05.2017 - [[https://github.com/PyEditor/PyEditor/compare/v0.1.0...v0.2.0|compare v0.1.0...v0.2.0]]
+* v0.2.0 - 07.05.2017 - [compare v0.1.0...v0.2.0](https://github.com/PyEditor/PyEditor/compare/v0.1.0...v0.2.0)
   * status output
   * load/save
 * v0.1.0
