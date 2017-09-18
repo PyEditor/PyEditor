@@ -7,6 +7,8 @@ works only on Python 3 ;)
 
 ## quickstart
 
+### Raspbian/Linux/MacOS:
+
 ```bash
 ~$ wget https://raw.githubusercontent.com/PyEditor/PyEditor/master/boot_PyEditor.sh
 ~$ chmod +x boot_PyEditor.sh
@@ -15,6 +17,13 @@ works only on Python 3 ;)
 ~/PyEditor_env$ source bin/activate
 (PyEditor_env) ~/PyEditor_env$ pyeditor
 ```
+
+### Windows:
+
+* download [boot_PyEditor.cmd](https://github.com/PyEditor/PyEditor/raw/master/boot_PyEditor.cmd)
+* store it somewhere
+* Execute the batchfile
+* The Executeable can then be found under: `...\PyEditor\Scripts\pyeditor.exe`
 
 
 ## TODO
