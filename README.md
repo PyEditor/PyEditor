@@ -47,7 +47,7 @@ works only on Python 3 ;)
   * load/save
 * v0.1.0
   * display "run output" in GUI
-* v0.0.1
+* v0.0.1 - 06.05.2017
   * first release created on "[PyDDF Python Spring Sprint 2017](http://www.pyddf.de/)"
   * Project started with [SpotlightKid/python-package-cookiecutter](https://github.com/SpotlightKid/python-package-cookiecutter)
 
