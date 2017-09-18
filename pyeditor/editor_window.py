@@ -10,19 +10,26 @@ from pyeditor.tk_helpers.scrolledlistbox import ScrolledListbox
 from pyeditor.tk_helpers.mymultistatusbar import MyMultiStatusBar
 from pyeditor.script_list import ScriptList
 
+# https://docs.python.org/3/whatsnew/3.6.html#idlelib-and-idle
 try:
+    # Python 3.5
     from idlelib.ColorDelegator import ColorDelegator
 except ModuleNotFoundError:
+    # Python 3.6
     from idlelib.colorizer import ColorDelegator
 
 try:
+    # Python 3.5
     from idlelib.MultiStatusBar import MultiStatusBar
 except ModuleNotFoundError:
+    # Python 3.6
     from idlelib.statusbar import MultiStatusBar
 
 try:
+    # Python 3.5
     from idlelib.Percolator import Percolator
 except ModuleNotFoundError:
+    # Python 3.6
     from idlelib.percolator import Percolator
 
 from pyeditor.config import DEFAULT_FILETYPES, BASE_PATH, RUN_BAK_PATH, DEFAULTEXTENSION

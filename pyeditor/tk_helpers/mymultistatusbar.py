@@ -1,7 +1,11 @@
 from tkinter import Entry, SUNKEN, W, LEFT, END
+
+# https://docs.python.org/3/whatsnew/3.6.html#idlelib-and-idle
 try:
+    # Python 3.5
     from idlelib.MultiStatusBar import MultiStatusBar
 except ModuleNotFoundError:
+    # Python 3.6
     from idlelib.statusbar import MultiStatusBar
 
 
