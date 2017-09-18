@@ -10,9 +10,20 @@ from pyeditor.tk_helpers.scrolledlistbox import ScrolledListbox
 from pyeditor.tk_helpers.mymultistatusbar import MyMultiStatusBar
 from pyeditor.script_list import ScriptList
 
-from idlelib.ColorDelegator import ColorDelegator
-from idlelib.MultiStatusBar import MultiStatusBar
-from idlelib.Percolator import Percolator
+try:
+    from idlelib.ColorDelegator import ColorDelegator
+except ModuleNotFoundError:
+    from idlelib.colorizer import ColorDelegator
+
+try:
+    from idlelib.MultiStatusBar import MultiStatusBar
+except ModuleNotFoundError:
+    from idlelib.statusbar import MultiStatusBar
+
+try:
+    from idlelib.Percolator import Percolator
+except ModuleNotFoundError:
+    from idlelib.percolator import Percolator
 
 from pyeditor.config import DEFAULT_FILETYPES, BASE_PATH, RUN_BAK_PATH, DEFAULTEXTENSION
 from pyeditor.constants import BREAK

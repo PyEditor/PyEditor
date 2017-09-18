@@ -1,5 +1,8 @@
 from tkinter import Entry, SUNKEN, W, LEFT, END
-from idlelib.MultiStatusBar import MultiStatusBar
+try:
+    from idlelib.MultiStatusBar import MultiStatusBar
+except ModuleNotFoundError:
+    from idlelib.statusbar import MultiStatusBar
 
 
 class MyMultiStatusBar(MultiStatusBar):
