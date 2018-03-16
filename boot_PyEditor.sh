@@ -15,7 +15,7 @@ DESTINATION=$(pwd)/PyEditor_env
 (
     source ${DESTINATION}/bin/activate
     set -x
-    python -m ensurepip
+    python3 -m ensurepip
 )
 if [ "$?" == "0" ]; then
     echo "pip installed, ok"
@@ -34,7 +34,7 @@ fi
     set -e
     source ${DESTINATION}/bin/activate
     set -x
-    pip install --upgrade pip
+    pip3 install --upgrade pip
 
-    pip install -e git+https://github.com/PyEditor/PyEditor.git#egg=pyeditor
+    pip3 install -e git+https://github.com/PyEditor/PyEditor.git#egg=pyeditor
 )
