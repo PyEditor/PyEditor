@@ -4,6 +4,16 @@ Python Editor for beginners and Minecraft Fans.
 
 works only on Python 3 ;)
 
+## Note: This project is currently no longer being maintained:
+
+There is now the great "Thonny - Python IDE for beginners":
+
+* Proejct web page: http://thonny.org/
+* Source code: https://bitbucket.org/plas/thonny/
+
+It probably makes more sense to implement a Minecraft plugin for Thonny, than to continue this project!
+
+
 
 ## quickstart
 
