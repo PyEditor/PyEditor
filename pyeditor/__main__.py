@@ -5,6 +5,14 @@ import argparse
 import logging
 import sys
 
+try:
+    import idlelib
+except ImportError as err:
+    print("\nERROR: Python IDLE not installed: %s" % err)
+    print("Install it e.g.:")
+    print("\t$ sudo apt install idle\n")
+    sys.exit(-1)
+
 from pyeditor.config import DESCRIPTION
 
 log = logging.getLogger(__name__)
