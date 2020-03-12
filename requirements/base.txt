@@ -4,4 +4,4 @@
 #
 #    pip-compile --output-file base.txt base.in
 #
-psutil==5.2.2
+psutil==5.6.6

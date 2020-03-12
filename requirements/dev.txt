@@ -9,9 +9,9 @@ args==0.1.0               # via clint
 astroid==1.5.2            # via pylint
 babel==2.4.0              # via sphinx
 clint==0.5.1              # via twine
-coverage==4.3.4
+coverage==4.3.4           # via -r dev.in
 docutils==0.13.1          # via sphinx
-flake8==3.3.0
+flake8==3.3.0             # via -r dev.in
 imagesize==0.7.1          # via sphinx
 isort==4.2.5              # via pylint
 jinja2==2.9.6             # via sphinx
@@ -20,22 +20,22 @@ markupsafe==1.0           # via jinja2
 mccabe==0.6.1             # via flake8, pylint
 pkginfo==1.4.1            # via twine
 pluggy==0.4.0             # via tox
-psutil==5.2.2
+psutil==5.6.6             # via -r base.txt
 py==1.4.33                # via pytest, tox
 pycodestyle==2.3.1        # via flake8
-pydocstyle==2.0.0
+pydocstyle==2.0.0         # via -r dev.in
 pyflakes==1.5.0           # via flake8
 pygments==2.2.0           # via sphinx
-pylint==1.7.1
-pytest==3.0.7
+pylint==1.7.1             # via -r dev.in
+pytest==3.0.7             # via -r dev.in
 pytz==2017.2              # via babel
 requests-toolbelt==0.7.1  # via twine
 requests==2.13.0          # via requests-toolbelt, sphinx, twine
 six==1.10.0               # via astroid, pydocstyle, pylint, sphinx
 snowballstemmer==1.2.1    # via pydocstyle, sphinx
-sphinx==1.5.5
-tox==2.7.0
-twine==1.8.1
+sphinx==1.5.5             # via -r dev.in
+tox==2.7.0                # via -r dev.in
+twine==1.8.1              # via -r dev.in
 virtualenv==15.1.0        # via tox
-wheel==0.29.0
+wheel==0.29.0             # via -r dev.in
 wrapt==1.10.10            # via astroid
